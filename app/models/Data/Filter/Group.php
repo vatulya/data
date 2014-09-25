@@ -15,6 +15,9 @@ class Group extends AbstractFilter
             return $data;
         }
         return array_filter($data, function($a) {
+            if (!is_array($a) || !array_key_exists('group', $a)) {
+                return false;
+            }
             return strtolower($a['group']) == strtolower($this->value);
         });
     }

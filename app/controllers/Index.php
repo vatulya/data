@@ -29,7 +29,7 @@ class Index extends AbstractController
         $orderField = getArrayValue($order, 'field');
         $orderDirection = getArrayValue($order, 'direction');
         $data = $dataManager->getData($orderField, $orderDirection);
-        $this->view['data'] = $data;
+        $this->view['data'] = array_values($data);
         $this->view['order'] = [
             'field' => $orderField,
             'direction' => $orderDirection,

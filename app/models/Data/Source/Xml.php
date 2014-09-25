@@ -24,16 +24,18 @@ class Xml extends AbstractSource
      * @param \SimpleXMLElement $data
      * @return array
      */
-    protected function prepareData(\SimpleXMLElement $data)
+    protected function prepareData($data)
     {
         $preparedData = [];
-        foreach ($data->Item as $item) {
-            $preparedData[] = [
-                'group' => (string)$item['Type'],
-                'code' => (string)$item->Code,
-                'value' => (float)$item->Value,
-                'name' => (string)$item->Description,
-            ];
+        if ($data instanceof \SimpleXMLElement) {
+            foreach ($data->Item as $item) {
+                $preparedData[] = [
+                    'group' => (string)$item['Type'],
+                    'code' => (string)$item->Code,
+                    'value' => (float)$item->Value,
+                    'name' => (string)$item->Description,
+                ];
+            }
         }
         return $preparedData;
     }

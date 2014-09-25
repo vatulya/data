@@ -15,6 +15,9 @@ class Name extends AbstractFilter
             return $data;
         }
         return array_filter($data, function($a) {
+            if (!is_array($a) || !array_key_exists('name', $a)) {
+                return false;
+            }
             return stripos($a['name'], $this->value) !== false;
         });
     }

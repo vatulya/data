@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "Controller\\": "app/controllers/",
-            "Model\\": "app/models/"
+            "Model\\": "app/models/",
+            "Dummy\\": "tests/_dummies/"
         },
         "files": ["app/functions.php"]
     }

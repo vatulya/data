@@ -11,13 +11,28 @@ class Php extends AbstractSource
      */
     public function getData()
     {
+        $data = $this->getDataFromFile();
+        return $this->prepareData($data);
+    }
+
+    /**
+     * @return array|mixed
+     * @throws \Exception
+     */
+    protected function getDataFromFile()
+    {
+        if (empty($this->config['filename'])) {
+            throw new \Exception('Empty config');
+        }
         $filename = APPLICATION_PATH . $this->config['filename'];
         if (!file_exists($filename)) {
             throw new \Exception('Can\'t find file "' . $filename . '"');
         }
-        $data = include $filename;
-
-        return $this->prepareData($data);
+        $data = @include $filename;
+        if (!is_array($data)) {
+            $data = [];
+        }
+        return $data;
     }
 
     /**
@@ -27,13 +42,17 @@ class Php extends AbstractSource
     protected function prepareData(array $data)
     {
         $preparedData = [];
-        foreach ($data as $group => $groupData) {
-            foreach ($groupData as $code => $itemData) {
-                $item = [
-                    'group' => $group,
-                    'code' => $code,
-                ];
-                $preparedData[] = $item + $itemData;
+        if (is_array($data)) {
+            foreach ($data as $group => $groupData) {
+                if (is_array($groupData)) {
+                    foreach ($groupData as $code => $itemData) {
+                        $item = [
+                            'group' => $group,
+                            'code' => $code,
+                        ];
+                        $preparedData[] = $item + $itemData;
+                    }
+                }
             }
         }
         return $preparedData;

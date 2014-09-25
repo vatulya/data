@@ -46,9 +46,35 @@ class Manager
     public function getData($orderField, $orderDirection = 'asc')
     {
         $data = $this->source->getData();
+        $data = $this->applyFilters($data);
+        $data = $this->applyOrder($data, $orderField, $orderDirection);
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function applyFilters(array $data)
+    {
         foreach ($this->filters as $filter) {
-            $data = $filter->filter($data);
+            try {
+                $data = $filter->filter($data);
+            } catch (\Exception $e) {
+                // TODO: add logs
+            }
         }
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @param string $orderField
+     * @param string $orderDirection
+     * @return array $data
+     */
+    protected function applyOrder(array $data, $orderField = '', $orderDirection = 'asc')
+    {
         $orderField = (string)$orderField;
         if ($orderField) {
             usort($data, function($a, $b) use ($orderField) {

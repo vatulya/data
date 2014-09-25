@@ -11,6 +11,16 @@ class Json extends AbstractSource
      */
     public function getData()
     {
+        $data = $this->getDataFromFile();
+        return $this->prepareData($data);
+    }
+
+    /**
+     * @return array|mixed|string
+     * @throws \Exception
+     */
+    protected function getDataFromFile()
+    {
         $filename = APPLICATION_PATH . $this->config['filename'];
         if (!file_exists($filename)) {
             throw new \Exception('Can\'t find file "' . $filename . '"');
@@ -18,26 +28,29 @@ class Json extends AbstractSource
         $data = file_get_contents($filename);
         $data = json_decode($data);
         if (json_last_error()) {
-            return [];
+            $data = [];
         }
-
-        return $this->prepareData($data);
+        return $data;
     }
 
     /**
      * @param array $data
      * @return array
      */
-    protected function prepareData($data)
+    protected function prepareData(array $data)
     {
         $preparedData = [];
-        foreach ($data as $row) {
-            $preparedData[] = [
-                'code' => getArrayValue($row, 0, ''),
-                'name' => getArrayValue($row, 1, ''),
-                'value' => getArrayValue($row, 2, 0),
-                'group' => getArrayValue($row, 3, ''),
-            ];
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                if (is_array($row)) {
+                    $preparedData[] = [
+                        'code' => (string)getArrayValue($row, 0, ''),
+                        'name' => (string)getArrayValue($row, 1, ''),
+                        'value' => (float)str_replace(',', '.', getArrayValue($row, 2, 0)),
+                        'group' => (string)getArrayValue($row, 3, ''),
+                    ];
+                }
+            }
         }
         return $preparedData;
     }

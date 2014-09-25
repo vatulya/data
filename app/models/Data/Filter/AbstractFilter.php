@@ -42,6 +42,7 @@ abstract class AbstractFilter
      */
     public function setValue($value)
     {
+        $value = is_scalar($value) ? (string)$value : '';
         $this->value = $value;
         return $this;
     }

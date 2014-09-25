@@ -15,6 +15,9 @@ class Code extends AbstractFilter
             return $data;
         }
         return array_filter($data, function($a) {
+            if (!is_array($a) || !array_key_exists('code', $a)) {
+                return false;
+            }
             return strtolower($a['code']) == strtolower($this->value);
         });
     }

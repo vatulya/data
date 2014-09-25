@@ -8,9 +8,6 @@ abstract class AbstractController
     const DEFAULT_ACTION = 'index';
     const DEFAULT_CONTROLLER = 'index';
 
-    const SEND_HTML = 'html';
-    const SEND_JSON = 'json';
-
     /**
      * @var array
      */
@@ -88,8 +85,7 @@ abstract class AbstractController
     public function render($controller, $action)
     {
         $file = sprintf('%s/%s.html', strtolower($controller), strtolower($action));
-        $content = self::getTwig()->render($file, $this->view);
-        self::send($content);
+        echo self::getTwig()->render($file, $this->view);
     }
 
     /**
@@ -99,25 +95,6 @@ abstract class AbstractController
     {
         $loader = new \Twig_Loader_Filesystem(APPLICATION_PATH . '/templates');
         return new \Twig_Environment($loader);
-    }
-
-    /**
-     * @param mixed $data
-     * @param string $format
-     */
-    static protected function send($data, $format = self::SEND_HTML)
-    {
-        switch ($format) {
-            case self::SEND_JSON:
-                $data = json_encode($data);
-                break;
-
-            case self::SEND_HTML:
-            default:
-                // nothing. default action.
-                break;
-        }
-        echo (string)$data;
     }
 
 }

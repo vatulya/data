@@ -9,9 +9,15 @@ class Value extends AbstractFilter
 
     protected $rangeMax;
 
+    /**
+     * @param $value
+     * @return $this
+     */
     public function setValue($value)
     {
-        if (strpos($value, ' - ') !== false) {
+        parent::setValue($value);
+        if (strpos($this->value, ' - ') !== false) {
+            $this->value = 0;
             list($this->rangeMin, $this->rangeMax) = explode(' - ', $value);
             $this->rangeMin = (float)$this->rangeMin;
             $this->rangeMax = (float)$this->rangeMax;
@@ -21,13 +27,14 @@ class Value extends AbstractFilter
             if ($this->rangeMax < 0 || $this->rangeMax < $this->rangeMin) {
                 $this->rangeMax = 0;
             }
-            $this->value = null;
         } else {
-            $this->value = (float)$value;
+            $this->rangeMin = $this->rangeMax = 0;
+            $this->value = (float)$this->value;
             if ($this->value < 0) {
                 $this->value = 0;
             }
         }
+        return $this;
     }
 
     /**
@@ -39,12 +46,18 @@ class Value extends AbstractFilter
         if (!$this->value && !$this->rangeMin && !$this->rangeMax) {
             return $data;
         }
-        if (!is_null($this->value)) {
+        if ($this->value > 0) {
             return array_filter($data, function($a) {
+                if (!is_array($a) || !array_key_exists('value', $a)) {
+                    return false;
+                }
                 return $a['value'] == $this->value;
             });
         } else {
             return array_filter($data, function($a) {
+                if (!is_array($a) || !array_key_exists('value', $a)) {
+                    return false;
+                }
                 return $a['value'] >= $this->rangeMin && (!$this->rangeMax || $a['value'] <= $this->rangeMax);
             });
         }
