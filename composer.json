@@ -1,0 +1,13 @@
+{
+    "require": {
+        "codeception/codeception": "2.*",
+        "twig/twig": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Controller\\": "app/controllers/",
+            "Model\\": "app/models/"
+        },
+        "files": ["app/functions.php"]
+    }
+}

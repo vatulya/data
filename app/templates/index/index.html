@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="/css/common.css">
+
+    <title>Data project</title>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="data-filters-container">
+            <form id="data-filters-form" class="">
+                <input type="hidden" name="order[field]" value="" id="orderField">
+                <input type="hidden" name="order[direction]" value="" id="orderDirection">
+
+                <div class="form-group">
+                    <label class="" for="source">Source</label>
+                    <select class="source" name="source">
+                        <option value="php">PHP</option>
+                        <option value="json">JSON</option>
+                        <option value="xml">XML</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="filter[group]">Group</label>
+                    <select class="filter-group" name="filter[group]">
+                        <option value="">All</option>
+                        <option value="europe">Europe</option>
+                        <option value="world">World</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="filter[code]">Code</label>
+                    <input class="filter-code" type="text" name="filter[code]" value="" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="filter[name]">Name</label>
+                    <input class="filter-name" type="text" name="filter[name]" value="" placeholder="">
+                </div>
+
+                <div class="form-group">
+                    <label class="" for="filter[value-range-min]">Value</label>
+                    from <input class="filter-value-range-min" type="text" name="filter[value-range-min]" value="" placeholder="min value">
+                    to <input class="filter-value-range-max" type="text" name="filter[value-range-max]" value="" placeholder="max value">
+                    <b>OR</b>
+                    <input class="filter-value" type="text" name="filter[value]" value="" placeholder="equal value">
+                </div>
+
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+
+        <div class="data-container" id="data-container">
+
+        </div>
+
+    </div>
+
+    <script src="/js/common.js"></script>
+</body>
+</html>

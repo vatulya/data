@@ -1,0 +1,36 @@
+<table class="table table-striped table-hover" id="data-table">
+    <thead>
+    <tr>
+        <th class="group col-sortable {% if order.field == 'group' %}sorted-{% if order.direction == 'desc' %}desc{% else %}asc{% endif %}{% endif %}" data-sort="group">
+            Group <i class="sort sort-asc glyphicon glyphicon-sort-by-attributes"></i><i class="sort sort-desc glyphicon glyphicon-sort-by-attributes-alt"></i>
+        </th>
+        <th class="code col-sortable {% if order.field == 'code' %}sorted-{% if order.direction == 'desc' %}desc{% else %}asc{% endif %}{% endif %}" data-sort="code">
+            Code <i class="sort sort-asc glyphicon glyphicon-sort-by-attributes"></i><i class="sort sort-desc glyphicon glyphicon-sort-by-attributes-alt"></i>
+        </th>
+        <th class="name col-sortable {% if order.field == 'name' %}sorted-{% if order.direction == 'desc' %}desc{% else %}asc{% endif %}{% endif %}" data-sort="name">
+            Name <i class="sort sort-asc glyphicon glyphicon-sort-by-attributes"></i><i class="sort sort-desc glyphicon glyphicon-sort-by-attributes-alt"></i>
+        </th>
+        <th class="value col-sortable {% if order.field == 'value' %}sorted-{% if order.direction == 'desc' %}desc{% else %}asc{% endif %}{% endif %}" data-sort="value">
+            Value <i class="sort sort-asc glyphicon glyphicon-sort-by-attributes"></i><i class="sort sort-desc glyphicon glyphicon-sort-by-attributes-alt"></i>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in data %}
+    <tr>
+        <td class="group">
+            {{ item.group }}
+        </td>
+        <td class="code">
+            {{ item.code }}
+        </td>
+        <td class="name">
+            {{ item.name }}
+        </td>
+        <td class="value">
+            {{ item.value }}
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

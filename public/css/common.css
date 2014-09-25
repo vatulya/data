@@ -1,0 +1,15 @@
+#data-table th:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+#data-table th .sort {
+    display: none;
+}
+
+#data-table th.sorted-asc .sort.sort-asc {
+    display: inline;
+}
+#data-table th.sorted-desc .sort.sort-desc {
+    display: inline;
+}
