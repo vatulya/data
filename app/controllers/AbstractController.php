@@ -38,7 +38,8 @@ abstract class AbstractController
         $class = '\Controller\\' . ucfirst(strtolower($controller));
         $method = ucfirst(strtolower($action)) . 'Action';
         if (!class_exists($class) || !is_callable([$class, $method], true)) {
-            die('Can\'t load "' . $class . '::' . $method . '"');
+//            die('Can\'t load "' . $class . '::' . $method . '"');
+            die('Something wrong');
         }
         try {
             /** @var AbstractController $object */
@@ -48,7 +49,8 @@ abstract class AbstractController
                 $object->render($controller, $action);
             }
         } catch (\Exception $e) {
-            die('Exception: "' . $e->getMessage() . '" (' . $e->getFile() . ':' . $e->getLine() . ')');
+//            die('Exception: "' . $e->getMessage() . '" (' . $e->getFile() . ':' . $e->getLine() . ')');
+            die('Something wrong');
         }
     }
 
